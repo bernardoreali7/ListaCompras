@@ -21,8 +21,12 @@ import androidx.core.view.WindowInsetsCompat;
 import java.util.ArrayList;
 import java.util.List;
 
+import listacompras.app.main.BDHelpers.ItemDBHelper;
+import listacompras.app.main.BDHelpers.ListaDbHelper;
+import listacompras.app.main.BDHelpers.ListaItemDBHelper;
 import listacompras.app.main.Entities.ListaCompras;
 import listacompras.app.main.Entities.ListaComprasAdapter;
+import listacompras.app.main.Entities.ListaItem;
 
 public class CreateListaComprasActivity extends AppCompatActivity {
     EditText input_nome;
@@ -32,9 +36,13 @@ public class CreateListaComprasActivity extends AppCompatActivity {
     private List<ListaItem> listasItens;
     private ListaComprasAdapter adapter;
 
+    private ItemDBHelper itemDB;
+    private ListaDbHelper listaDB;
+    private ListaItemDBHelper listaItemDBHelper;
+
     private List<ListaCompras> dummyData() {
         List<ListaCompras> listasCompras = new ArrayList<>();
-        listasCompras.add(new ListaCompras(1, "Lista 1", "13/06/2024"));
+        listasCompras.add(1, "Lista 1", "13/06/2024");
         listasCompras.add(new ListaCompras(2, "Lista 2", "10/06/2024"));
         listasCompras.add(new ListaCompras(3, "Lista 3", "09/06/2024"));
         return listasCompras;
@@ -67,7 +75,7 @@ public class CreateListaComprasActivity extends AppCompatActivity {
 
 
         ListView listViewClientes = findViewById(R.id.listViewListasCompra);
-        listasCompras = dummyData();
+        List<ListaCompras> listasCompras = dummyData();
         adapter = new ListaComprasAdapter(this, listasCompras);
         listViewClientes.setAdapter(adapter);
 

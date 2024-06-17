@@ -1,27 +1,34 @@
 package listacompras.app.main.Entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class ListaCompras implements Serializable {
-    private long ID;
-    private String NOME;
-    private String DATA;
-
-    public ListaCompras(long id, String name, String data) {
-        this.ID = id;
-        this.NOME = name;
-        this.DATA = data;
-    }
+    private long id;
+    private String nome;
+    private Date data;
 
     public long getId() {
-        return ID;
+        return id;
     }
 
     public String getName() {
-        return NOME;
+        return nome;
     }
 
-    public String getData() {
-        return DATA;
+    public Date getData() {
+        return data;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
     }
 }
