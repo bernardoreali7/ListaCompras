@@ -1,9 +1,12 @@
-package com.example.listacompras.Utils;
+package listacompras.app.main.Utils;
+
+import android.util.Log;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class Util {
     private static final SimpleDateFormat sdf = (SimpleDateFormat)SimpleDateFormat.getInstance();
@@ -11,19 +14,33 @@ public class Util {
 
     public static Date strToDateTime (String data) {
 
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = null;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         try {
-            date = df.parse(data);
-        } catch (ParseException e) {
+            return formatter.parse(data);
+        } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
-
-        return date;
     }
 
     public static synchronized String format(Date date, String pattern) {
         sdf.applyPattern(pattern == null ? defaultDatePattern : pattern);
         return sdf.format(date);
+    }
+
+    public static String formatDateToString(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        return formatter.format(date);
+    }
+
+    public static Date strToDateTimeDB (String data) {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        try {
+            return formatter.parse(data);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

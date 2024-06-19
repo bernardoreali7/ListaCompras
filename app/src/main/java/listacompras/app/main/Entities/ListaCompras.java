@@ -1,6 +1,7 @@
 package listacompras.app.main.Entities;
 
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.util.Date;
 
 public class ListaCompras implements Serializable {

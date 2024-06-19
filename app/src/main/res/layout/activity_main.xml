@@ -35,7 +35,6 @@
         android:layout_height="match_parent"
         android:layout_marginTop="80dp"/>
 
-
     <ImageButton
         android:id="@+id/btn_addListaCompras"
         android:layout_width="56dp"
@@ -49,5 +48,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_add" />
+
+
+    <Button
+        android:id="@+id/btn_incluir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="#344023"
+        android:text="Incluir itens"
+        android:textColor="#D9C8B4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
