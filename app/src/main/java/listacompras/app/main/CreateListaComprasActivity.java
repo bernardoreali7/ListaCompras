@@ -2,6 +2,7 @@ package listacompras.app.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -67,7 +68,9 @@ public class CreateListaComprasActivity extends AppCompatActivity implements Ite
 
                 long listId = DBHelper.inserirLista(newLista);
 
-                for (Item item : selectedItems) {
+                List<Item> listaItemsSelecionados = itemAdapter.getSelectedItems();
+
+                for (Item item : listaItemsSelecionados) {
                     DBHelper.inserirListaItem(listId, item.getId());
                 }
 
@@ -90,7 +93,7 @@ public class CreateListaComprasActivity extends AppCompatActivity implements Ite
     public void onItemSelected(List<Item> selectedItems) {
         float total = 0.0f;
         for (Item item : selectedItems) {
-            total += item.getPreco(); // Supondo que o tempo é o preço
+            total += item.getPreco();
         }
         DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(2);

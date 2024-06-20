@@ -18,7 +18,7 @@ import listacompras.app.main.Utils.Util;
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHolder> {
     private List<Item> itemList;
-    private List<Item> selectedItems = new ArrayList<>();;
+    private List<Item> selectedItems = new ArrayList<>();
     private OnItemSelectedListener onItemSelectedListener;
 
     public interface OnItemSelectedListener {
@@ -48,6 +48,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         return itemList.size();
     }
 
+    public List<Item> getSelectedItems() {
+        return selectedItems;
+    }
+
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         TextView textViewItemNome;
         TextView textViewItemPreco;
@@ -63,8 +67,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         void bind(Item item){
             textViewItemNome.setText(item.getNome());
             textViewItemPreco.setText(item.getPreco().toString());
-            checkBoxItem.setChecked(selectedItems.contains(item));
             checkBoxItem.setOnCheckedChangeListener(null);
+            checkBoxItem.setChecked(selectedItems.contains(item));
 
             checkBoxItem.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (isChecked) {

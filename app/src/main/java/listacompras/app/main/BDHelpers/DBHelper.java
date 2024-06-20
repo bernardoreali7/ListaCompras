@@ -158,7 +158,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put("nome", lista.getName());
-        values.put("data", Util.formatDateToString(new Date()));
+        values.put("data", new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
 
         return db.update("listacompras", values, "id = ?",
                 new String[]{String.valueOf(lista.getId())});
@@ -186,7 +186,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ListaCompras lista = new ListaCompras();
         lista.setId(cursor.getInt(cursor.getColumnIndex("id")));
         lista.setNome(cursor.getString(cursor.getColumnIndex("nome")));
-        lista.setData(Util.strToDateTime(cursor.getString(cursor.getColumnIndex("data"))));
+        lista.setData(Util.strToDateTimeDB(cursor.getString(cursor.getColumnIndex("data"))));
 
         cursor.close();
 
@@ -218,10 +218,11 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public long inserirListaItem(Long id_lista, Long id_item) {
+        Log.d("dbhelper", "inserirListaItem: id_lista = " + id_lista + " id_item = " + id_item);
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("id_lista", id_lista);
-        values.put("id_item", id_item);
+        values.put("ID_LISTA", id_lista);
+        values.put("ID_ITEM", id_item);
 
         long id = db.insert("LISTAITEM", null, values);
 
@@ -235,10 +236,10 @@ public class DBHelper extends SQLiteOpenHelper {
         List<Item> items = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT i.* FROM ITEM i "
-                + "INNER JOIN LISTAITEM lci "
-                + "ON i.id = lci.id"
-                + " WHERE lci.id = ?";
+        String query = "SELECT i.id FROM ITEM i " +
+                "INNER JOIN LISTAITEM li " +
+                "ON i.id = li.ID_ITEM " +
+                "WHERE li.ID_LISTA = ?";
 
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(id_lista)});
 
@@ -254,5 +255,30 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return items;
+    }
+
+    @SuppressLint("Range")
+    public List<Long> getItemIdsForLista(long id_lista) {
+        List<Long> itemIds = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT ID_ITEM FROM LISTAITEM WHERE ID_LISTA = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(id_lista)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                itemIds.add(cursor.getLong(cursor.getColumnIndex("ID_ITEM")));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return itemIds;
+    }
+
+    public void deletarItemsLista(ListaCompras lista){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("LISTAITEM", "id_lista = ?",
+                new String[]{String.valueOf(lista.getId())});
+        db.close();
     }
 }

@@ -3,8 +3,8 @@ package listacompras.app.main.Entities;
 public class Item {
     private long id;
     private String nome;
-
     private Float preco;
+    private Boolean isSelected = false;
 
     public String getNome() {
         return nome;
@@ -28,5 +28,13 @@ public class Item {
 
     public long getId() {
         return id;
+    }
+
+    public void setSelected(Boolean selected) {
+        isSelected = selected;
+    }
+
+    public Boolean isSelected() {
+        return isSelected;
     }
 }

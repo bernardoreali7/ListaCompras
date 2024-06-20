@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
         listViewListaCompras.setOnItemClickListener((parent, view, position, id) -> {
             ListaCompras selectedListaCompras = (ListaCompras) parent.getItemAtPosition(position);
 
-            Intent intent = new Intent(MainActivity.this, ListaComprasViewActivity.class);
-            intent.putExtra("listaCompras", selectedListaCompras);
+            Intent intent = new Intent(MainActivity.this, EditarListaComprasActivity.class);
+            intent.putExtra("LIST_ID", selectedListaCompras.getId());
 
             startActivity(intent);
         });
@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btn_addItem = findViewById(R.id.btn_incluir);
-
         btn_addItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
