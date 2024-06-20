@@ -29,6 +29,7 @@ import listacompras.app.main.Entities.ListaCompras;
 public class EditarListaComprasActivity extends AppCompatActivity implements ItemsEditAdapter.OnItemSelectedListener{
     private EditText listaNome;
     private Button btnSalvar;
+    private Button btnDeletar;
     private ImageButton btnVoltar;
     private DBHelper DBHelper;
     private long listId;
@@ -45,6 +46,7 @@ public class EditarListaComprasActivity extends AppCompatActivity implements Ite
         btnSalvar = findViewById(R.id.btn_editar);
         valorTotal = findViewById(R.id.txt_soma);
         btnVoltar = findViewById(R.id.btn_retornar);
+        btnDeletar = findViewById(R.id.btn_deletar);
         DBHelper = new DBHelper(this);
         recyclerViewItems = findViewById(R.id.recyclerViewItems);
 
@@ -69,7 +71,7 @@ public class EditarListaComprasActivity extends AppCompatActivity implements Ite
                 List<Long> updatedItems = itemsEditAdapter.getSelectedItems();
                 Log.d("editList", "updated items: " + updatedItems.toString());
                 DBHelper.editarLista(newLista);
-                DBHelper.deletarItemsLista(newLista);
+                DBHelper.deletarItemsLista(listId);
 
                 for (Long item : updatedItems) {
                     DBHelper.inserirListaItem(listId, item);
@@ -79,6 +81,25 @@ public class EditarListaComprasActivity extends AppCompatActivity implements Ite
 
                 Intent intent_redirect = new Intent(EditarListaComprasActivity.this, MainActivity.class);
                 startActivity(intent_redirect);
+            }
+        });
+
+        btnDeletar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DBHelper.deletarItemsLista(listId);
+                DBHelper.deletarLista(listId);
+
+                Intent intent1 = new Intent(EditarListaComprasActivity.this, MainActivity.class);
+                startActivity(intent1);
+            }
+        });
+
+        btnVoltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent_voltar = new Intent(EditarListaComprasActivity.this, MainActivity.class);
+                startActivity(intent_voltar);
             }
         });
     }

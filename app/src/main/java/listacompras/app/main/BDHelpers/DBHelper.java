@@ -164,10 +164,10 @@ public class DBHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(lista.getId())});
     }
 
-    public void deletarLembrete(ListaCompras lista) {
+    public void deletarLista(Long lista_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete("listacompras", "id = ?",
-                new String[]{String.valueOf(lista.getId())});
+                new String[]{String.valueOf(lista_id)});
         db.close();
     }
 
@@ -275,10 +275,10 @@ public class DBHelper extends SQLiteOpenHelper {
         return itemIds;
     }
 
-    public void deletarItemsLista(ListaCompras lista){
+    public void deletarItemsLista(Long lista_id){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete("LISTAITEM", "id_lista = ?",
-                new String[]{String.valueOf(lista.getId())});
+                new String[]{String.valueOf(lista_id)});
         db.close();
     }
 }
